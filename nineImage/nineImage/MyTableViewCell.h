@@ -19,6 +19,7 @@
 @property (strong,nonatomic) UIImageView* headImage;
 @property (strong,nonatomic) NineImageView *MyView;
 @property (strong,nonatomic) UILabel* textLable;
+@property (strong,nonatomic) UIView * lineView;
 
 @property (assign,nonatomic) id<NineImageViewDelegate> delegate;
 

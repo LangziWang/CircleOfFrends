@@ -32,10 +32,16 @@
 }
 -(void)layoutSubviews{
     [super layoutSubviews];
-    for (int i=0; i<_imageArray.count; i++) {
-        UIImageView* image = (UIImageView*)[self viewWithTag:i+1];
-        image.image = [UIImage imageNamed:_imageArray[i]];
-        image.frame = CGRectMake(i%3 * ((self.frame.size.width-20)/3+10), i/3*((self.frame.size.height-20)/3+10), (self.frame.size.width-20)/3, (self.frame.size.height-20)/3);
+    if (_imageArray.count == 1) {
+        UIImageView* image = (UIImageView*)[self viewWithTag:1];
+        image.image = [UIImage imageNamed:_imageArray[0]];
+        image.frame = CGRectMake(0, 0, (self.frame.size.width-20)/3*2, (self.frame.size.height-20)/3);
+    }else {
+        for (int i=0; i<_imageArray.count; i++) {
+            UIImageView* image = (UIImageView*)[self viewWithTag:i+1];
+            image.image = [UIImage imageNamed:_imageArray[i]];
+            image.frame = CGRectMake(i%3 * ((self.frame.size.width-20)/3+10), i/3*((self.frame.size.height-20)/3+10), (self.frame.size.width-20)/3, (self.frame.size.height-20)/3);
+        }
     }
 }
 

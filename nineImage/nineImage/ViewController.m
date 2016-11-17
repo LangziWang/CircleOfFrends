@@ -10,14 +10,16 @@
 #import "MWPhotoBrowser.h"
 #import "NineImageView.h"
 #import "MyTableViewCell.h"
+#import "BackImageCell.h"
 #import "MJRefresh.h"
 
 #define SCREEN_SIZE [UIScreen mainScreen].bounds.size
-@interface ViewController ()<MWPhotoBrowserDelegate,NineImageViewDelegate,UITableViewDelegate,UITableViewDataSource>
+@interface ViewController ()<MWPhotoBrowserDelegate,NineImageViewDelegate,UITableViewDelegate,UITableViewDataSource,BackImageDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSMutableArray* _selections;
     NSMutableArray* photoArray;
     NSMutableArray *_tableArray;
+    UIImage* _image;
 }
 @end
 
@@ -29,16 +31,32 @@
     self.view.backgroundColor = [UIColor whiteColor];
     photoArray = [NSMutableArray array];
     _tableArray = [NSMutableArray array];
-   
+    
+    NSData* data = [[NSUserDefaults standardUserDefaults]objectForKey:@"bg"];
+    _image = [UIImage imageWithData:data];
     [self createTableView];
 }
+#pragma mark UIImagePickerControllerDelegate
+//该代理方法仅适用于只选取图片时
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    NSData* data = UIImagePNGRepresentation(image);
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"bg"];
+    _image = image;
+    [_tableView reloadData];
+}
+
+
 -(void)createData{
+    NSArray* textArr = @[@"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗",
+                                        @"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗",
+                                        @"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗"];
     for (int i=0; i<9; i++) {
         MyModel* model = [[MyModel alloc]init];
         model.imageUrl = [NSString stringWithFormat:@"q%d.jpg",i ];
         model.timeString = [NSString stringWithFormat:@"%d分钟前",i+1];
         model.nameString = [NSString stringWithFormat:@"姓名%d",i];
-        model.textString = [NSString stringWithFormat:@"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗 i%d",i+1];
+        model.textString = textArr[i%3];
         for (int j=0; j<= i; j++) {
             [model.strArray addObject:[NSString stringWithFormat:@"qqqqqq%d",j+1]];
             if (j==8) {
@@ -51,10 +69,11 @@
     [_tableView reloadData];
 }
 -(void)createTableView{
-    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_SIZE.width, SCREEN_SIZE.height ) style:UITableViewStylePlain];
+    _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, -64, SCREEN_SIZE.width, SCREEN_SIZE.height+64 ) style:UITableViewStylePlain];
     _tableView.dataSource = self;
     _tableView.delegate = self;
     _tableView.tableFooterView = [[UIView alloc]init];
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:_tableView];
     
     //首页动态的下拉与上拉
@@ -74,29 +93,70 @@
     [_tableView.mj_footer endRefreshing];
 }
 
-
+-(void)singleTouch{
+    UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"更换背景图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
+            imagePicker.delegate = self;
+            imagePicker.allowsEditing = YES;
+            imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:imagePicker animated:YES completion:nil];
+        }];
+        UIAlertAction *camAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSLog(@"拍照");
+        }];
+        [alert addAction:photoAction];
+        [alert addAction:camAction];
+        [alert addAction:cancelAction];
+        [self presentViewController:alert animated:YES completion:nil];
+    }];
+    [alert addAction:photoAction];
+    [alert addAction:cancelAction];
+    [self presentViewController:alert animated:YES completion:nil];
+}
 #pragma mark ****** tableView代理
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString* cellId = @"cell";
-    MyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[MyTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    if (indexPath.row == 0) {
+         static NSString* cellId = @"back";
+        BackImageCell*backcell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        if (!backcell) {
+            backcell = [[BackImageCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+            backcell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        
+        [backcell configModel:_image];
+        backcell.delegate = self;
+        return backcell;
+    }else{
+        static NSString* cellId = @"cell";
+        MyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+        if (!cell) {
+            cell = [[MyTableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        for (UIView *ve in cell.contentView.subviews) {
+            [ve removeFromSuperview];
+        }
+        cell.delegate = self;
+        MyModel* model = _tableArray[indexPath.row-1];
+        [cell configModel:model];
+        return cell;
     }
-    for (UIView *ve in cell.contentView.subviews) {
-        [ve removeFromSuperview];
-    }
-    cell.delegate = self;
-    MyModel* model = _tableArray[indexPath.row];
-    [cell configModel:model];
-    return cell;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return _tableArray.count;
+    return _tableArray.count + 1;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    MyModel* model = _tableArray[indexPath.row];
-    return [MyTableViewCell cellHeight:model];
+    if (indexPath.row == 0) {
+        return SCREEN_SIZE.height* 0.45;
+    }else{
+        MyModel* model = _tableArray[indexPath.row-1];
+        return [MyTableViewCell cellHeight:model];
+    }
 }
 
 -(void)createNineImageView{
@@ -112,6 +172,7 @@
     }
     imageView.imageArray = photoArray;
 }
+
 -(void)tapGestureTouch:(NSInteger)index andModel:(MyModel *)array{
     [self createImage:index andModel:array];
 }

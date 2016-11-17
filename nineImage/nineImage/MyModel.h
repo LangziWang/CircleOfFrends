@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import <UIKit/UIKit.h>
 @interface MyModel : NSObject
 
 @property (copy,nonatomic) NSMutableArray* imageArray;
@@ -16,5 +16,6 @@
 @property (strong,nonatomic) NSString* imageUrl;
 @property (strong,nonatomic) NSString* timeString;
 @property (strong,nonatomic) NSString* nameString;
+@property (strong,nonatomic) UIImage* image;
 
 @end

@@ -29,6 +29,7 @@
 		74B935B91DCAD49700ED48BF /* NineImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B935B81DCAD49700ED48BF /* NineImageView.m */; };
 		74B935BC1DCB15BD00ED48BF /* MyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B935BB1DCB15BD00ED48BF /* MyTableViewCell.m */; };
 		74B935BF1DCB1F4700ED48BF /* MyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 74B935BE1DCB1F4700ED48BF /* MyModel.m */; };
+		74EF65A21DDAB0E900B1B2F9 /* BackImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 74EF65A11DDAB0E900B1B2F9 /* BackImageCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +65,8 @@
 		74B935BB1DCB15BD00ED48BF /* MyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyTableViewCell.m; sourceTree = "<group>"; };
 		74B935BD1DCB1F4700ED48BF /* MyModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyModel.h; sourceTree = "<group>"; };
 		74B935BE1DCB1F4700ED48BF /* MyModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyModel.m; sourceTree = "<group>"; };
+		74EF65A01DDAB0E900B1B2F9 /* BackImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackImageCell.h; sourceTree = "<group>"; };
+		74EF65A11DDAB0E900B1B2F9 /* BackImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackImageCell.m; sourceTree = "<group>"; };
 		95B4D148BE45258E8391F7FD /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		E702551F311262B43E2A9AF6 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +131,8 @@
 				743046AB1DC326D500C5757A /* ViewController.m */,
 				74B935BA1DCB15BD00ED48BF /* MyTableViewCell.h */,
 				74B935BB1DCB15BD00ED48BF /* MyTableViewCell.m */,
+				74EF65A01DDAB0E900B1B2F9 /* BackImageCell.h */,
+				74EF65A11DDAB0E900B1B2F9 /* BackImageCell.m */,
 				74B935BD1DCB1F4700ED48BF /* MyModel.h */,
 				74B935BE1DCB1F4700ED48BF /* MyModel.m */,
 				74B935B71DCAD49700ED48BF /* NineImageView.h */,
@@ -305,6 +310,7 @@
 				74B935B91DCAD49700ED48BF /* NineImageView.m in Sources */,
 				74B935BF1DCB1F4700ED48BF /* MyModel.m in Sources */,
 				743046A61DC326D500C5757A /* main.m in Sources */,
+				74EF65A21DDAB0E900B1B2F9 /* BackImageCell.m in Sources */,
 				74B935BC1DCB15BD00ED48BF /* MyTableViewCell.m in Sources */,
 				740BC2C81DD59BFE00C2D56B /* MyViewController.m in Sources */,
 				740BC2CB1DD59C3600C2D56B /* TwoViewController.m in Sources */,

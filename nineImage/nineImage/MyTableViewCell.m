@@ -49,6 +49,10 @@
     _MyView.frame = CGRectMake(20, CGRectGetMaxY(_textLable.frame), SCREEN_SIZE.width-40, SCREEN_SIZE.width-40);
     _MyView.delegate = self;
     [self.contentView addSubview:_MyView];
+    
+     _lineView = [[UIView alloc]init];
+    _lineView.backgroundColor = [UIColor lightGrayColor];
+    [self.contentView addSubview:_lineView];
 }
 
 -(void)configModel:(MyModel *)model{
@@ -63,6 +67,9 @@
     [_textLable sizeToFit];
     [_timeLabel sizeToFit];
     _MyView.frame = CGRectMake(_MyView.frame.origin.x, CGRectGetMaxY(_textLable.frame)+5, _MyView.frame.size.width, _MyView.frame.size.height);
+}
+-(void)layoutSubviews{
+    _lineView.frame = CGRectMake(0, self.contentView.frame.size.height-1, SCREEN_SIZE.width, 1);
 }
 +(CGFloat)cellHeight:(MyModel *)model
 {
@@ -79,11 +86,21 @@
     return height+size.height + SCREEN_SIZE.width*0.12+20;
 }
 
-//-(CGSize)sizeWithString:(NSString*)string font:(UIFont*)f{
-////    UIFont *font = [UIFont systemFontOfSize:f];
-//    NSDictionary *attrs = [NSDictionary dictionaryWithObjectsAndKeys:f,NSFontAttributeName,nil];
-//    CGSize textLabelSize = [string boundingRectWithSize:CGSizeMake(SCREEN_SIZE.width-20, CGFLOAT_MAX) options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
-//    return textLabelSize;
+////在自定义的UITableViewCell里重写drawRect：方法
+//#pragma mark - 绘制Cell分割线
+//- (void)drawRect:(CGRect)rect {
+//    CGFloat width = rect.size.width;
+//    CGFloat height = rect.size.height;
+//    NSLog(@"%f",height);
+//    //获取上下文
+//    CGContextRef ctx = UIGraphicsGetCurrentContext();
+//    //取点
+//    CGContextMoveToPoint(ctx, 0, height*0.5-40);
+//    CGContextAddLineToPoint(ctx, width, height*0.5-40);
+//    //颜色
+//    [[UIColor colorWithRed:232/255.0 green:192/255.0 blue:133/255.0 alpha:1.0] setStroke];
+//    //画线
+//    CGContextStrokePath(ctx);
 //}
 
 -(void)tapGestureTouch:(NSInteger)index andModel:(MyModel *)array{
