@@ -20,6 +20,9 @@
 @property (strong,nonatomic) NineImageView *MyView;
 @property (strong,nonatomic) UILabel* textLable;
 @property (strong,nonatomic) UIView * lineView;
+@property (strong,nonatomic) UIButton* zanButton;
+@property (strong,nonatomic) UIView* zanView;
+@property (assign,nonatomic) BOOL isShow;
 
 @property (assign,nonatomic) id<NineImageViewDelegate> delegate;
 
