@@ -16,6 +16,8 @@
 		743046AF1DC326D500C5757A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 743046AD1DC326D500C5757A /* Main.storyboard */; };
 		743046B11DC326D500C5757A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 743046B01DC326D500C5757A /* Assets.xcassets */; };
 		743046B41DC326D600C5757A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 743046B21DC326D600C5757A /* LaunchScreen.storyboard */; };
+		7450BCD61DDEEBF7002D8C20 /* FrendsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7450BCD41DDEEBF7002D8C20 /* FrendsController.m */; };
+		7450BCD71DDEEBF7002D8C20 /* FrendsController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7450BCD51DDEEBF7002D8C20 /* FrendsController.xib */; };
 		749D7C3C1DD94DB0001652D8 /* UILabel+sizeToFit.m in Sources */ = {isa = PBXBuildFile; fileRef = 749D7C3B1DD94DB0001652D8 /* UILabel+sizeToFit.m */; };
 		74B935AE1DCAD38C00ED48BF /* q0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74B935A51DCAD38C00ED48BF /* q0.jpg */; };
 		74B935AF1DCAD38C00ED48BF /* q1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 74B935A61DCAD38C00ED48BF /* q1.jpg */; };
@@ -48,6 +50,9 @@
 		743046B01DC326D500C5757A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		743046B31DC326D600C5757A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		743046B51DC326D600C5757A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7450BCD31DDEEBF7002D8C20 /* FrendsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrendsController.h; sourceTree = "<group>"; };
+		7450BCD41DDEEBF7002D8C20 /* FrendsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrendsController.m; sourceTree = "<group>"; };
+		7450BCD51DDEEBF7002D8C20 /* FrendsController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FrendsController.xib; sourceTree = "<group>"; };
 		749D7C3A1DD94DB0001652D8 /* UILabel+sizeToFit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+sizeToFit.h"; sourceTree = "<group>"; };
 		749D7C3B1DD94DB0001652D8 /* UILabel+sizeToFit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+sizeToFit.m"; sourceTree = "<group>"; };
 		74B935A51DCAD38C00ED48BF /* q0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = q0.jpg; sourceTree = "<group>"; };
@@ -123,6 +128,9 @@
 			children = (
 				743046A71DC326D500C5757A /* AppDelegate.h */,
 				743046A81DC326D500C5757A /* AppDelegate.m */,
+				7450BCD31DDEEBF7002D8C20 /* FrendsController.h */,
+				7450BCD41DDEEBF7002D8C20 /* FrendsController.m */,
+				7450BCD51DDEEBF7002D8C20 /* FrendsController.xib */,
 				740BC2C61DD59BFE00C2D56B /* MyViewController.h */,
 				740BC2C71DD59BFE00C2D56B /* MyViewController.m */,
 				740BC2C91DD59C3600C2D56B /* TwoViewController.h */,
@@ -207,6 +215,7 @@
 				TargetAttributes = {
 					743046A01DC326D400C5757A = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = A9HY9M4Q78;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -244,6 +253,7 @@
 				743046B11DC326D500C5757A /* Assets.xcassets in Resources */,
 				74B935AE1DCAD38C00ED48BF /* q0.jpg in Resources */,
 				74B935B11DCAD38C00ED48BF /* q3.jpg in Resources */,
+				7450BCD71DDEEBF7002D8C20 /* FrendsController.xib in Resources */,
 				74B935B61DCAD38C00ED48BF /* q8.png in Resources */,
 				743046AF1DC326D500C5757A /* Main.storyboard in Resources */,
 			);
@@ -309,6 +319,7 @@
 				743046A91DC326D500C5757A /* AppDelegate.m in Sources */,
 				74B935B91DCAD49700ED48BF /* NineImageView.m in Sources */,
 				74B935BF1DCB1F4700ED48BF /* MyModel.m in Sources */,
+				7450BCD61DDEEBF7002D8C20 /* FrendsController.m in Sources */,
 				743046A61DC326D500C5757A /* main.m in Sources */,
 				74EF65A21DDAB0E900B1B2F9 /* BackImageCell.m in Sources */,
 				74B935BC1DCB15BD00ED48BF /* MyTableViewCell.m in Sources */,
@@ -434,8 +445,9 @@
 			baseConfigurationReference = 95B4D148BE45258E8391F7FD /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A9HY9M4Q78;
 				INFOPLIST_FILE = nineImage/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wang.nineImage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -447,8 +459,9 @@
 			baseConfigurationReference = E702551F311262B43E2A9AF6 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = A9HY9M4Q78;
 				INFOPLIST_FILE = nineImage/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = wang.nineImage;
 				PRODUCT_NAME = "$(TARGET_NAME)";

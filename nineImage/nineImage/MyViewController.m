@@ -7,7 +7,7 @@
 //
 
 #import "MyViewController.h"
-#import "ViewController.h"
+#import "FrendsController.h"
 #import "TwoViewController.h"
 
 @interface MyViewController ()
@@ -21,12 +21,12 @@
     [self createTabbar];
 }
 -(void)createTabbar{
-    ViewController* vc1 = [[ViewController alloc]init];
+    FrendsController* vc1 = [[FrendsController alloc]init];
     TwoViewController* vc2 = [[TwoViewController alloc]init];
     
     UINavigationController* nav1 = [[UINavigationController alloc]initWithRootViewController:vc1];
     UINavigationController* nav2 = [[UINavigationController alloc]initWithRootViewController:vc2];
-     vc1.title = @"图";
+     vc1.title = @"发现";
     vc2.title = @"文字";
     self.viewControllers = @[nav1,nav2];
 }

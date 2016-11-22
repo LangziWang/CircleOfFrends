@@ -27,42 +27,72 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.navigationItem.title = @"图片";
+    
     self.view.backgroundColor = [UIColor whiteColor];
     photoArray = [NSMutableArray array];
     _tableArray = [NSMutableArray array];
-    
+    [self setNavgationItem];
     NSData* data = [[NSUserDefaults standardUserDefaults]objectForKey:@"bg"];
     _image = [UIImage imageWithData:data];
     [self createTableView];
 }
-#pragma mark UIImagePickerControllerDelegate
-//该代理方法仅适用于只选取图片时
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
-    [picker dismissViewControllerAnimated:YES completion:nil];
-    NSData* data = UIImagePNGRepresentation(image);
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"bg"];
-    _image = image;
-    [_tableView reloadData];
+-(void)setNavgationItem{
+    self.navigationItem.title = @"朋友圈";
+    UIButton* btn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    btn.frame = CGRectMake(0, 0, 60, 30);
+    [btn setTitle:@"发布" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(issueFrends) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:btn];
+    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(btnLong:)];
+    longPress.minimumPressDuration = 1.0; //定义按的时间
+    [btn addGestureRecognizer:longPress];
 }
-
+-(void)btnLong:(UILongPressGestureRecognizer*)sender{
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        NSLog(@"发布wenzi");
+    }
+}
+-(void)issueFrends{
+    NSLog(@"发布朋友全");
+}
+#pragma mark UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage * image =info[UIImagePickerControllerOriginalImage];
+    if (picker.sourceType == UIImagePickerControllerSourceTypePhotoLibrary) {
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        NSData* data = UIImagePNGRepresentation(image);
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"bg"];
+        _image = image;
+        [_tableView reloadData];
+    }else if (picker.sourceType == UIImagePickerControllerSourceTypeCamera){
+        [picker dismissViewControllerAnimated:YES completion:nil];
+        NSData* data = UIImagePNGRepresentation(image);
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"bg"];
+        _image = image;
+        [_tableView reloadData];
+    }
+}
 
 -(void)createData{
     NSArray* textArr = @[@"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗",
                                         @"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗",
                                         @"四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗四海啥送ID过后回国发哦好我 i 汉溪长隆看法 vi 哦啊让就黄发垂髫你够 is 愤怒的吼 i 啊呢佛 i 还是都 i 个哈恶狗 i 怕黑狗"];
-    for (int i=0; i<9; i++) {
+    for (int i=0; i<10; i++) {
         MyModel* model = [[MyModel alloc]init];
-        model.imageUrl = [NSString stringWithFormat:@"q%d.jpg",i ];
+        model.imageUrl = [NSString stringWithFormat:@"q%d.jpg",i];
         model.timeString = [NSString stringWithFormat:@"%d分钟前",i+1];
         model.nameString = [NSString stringWithFormat:@"姓名%d",i];
         model.textString = textArr[i%3];
-        for (int j=0; j<= i; j++) {
-            [model.strArray addObject:[NSString stringWithFormat:@"qqqqqq%d",j+1]];
-            if (j==8) {
-                [model.imageArray addObject:[NSString stringWithFormat:@"q8"]];
-            }else
-                [model.imageArray  addObject:[NSString stringWithFormat:@"q%d.jpg",j]];
+        if (i > 0) {
+            for (int j=0; j<= i-1; j++) {
+                [model.strArray addObject:[NSString stringWithFormat:@"qqqqqq%d",j+1]];
+                if (j==8) {
+                    [model.imageArray addObject:[NSString stringWithFormat:@"q8"]];
+                }else
+                    [model.imageArray  addObject:[NSString stringWithFormat:@"q%d.jpg",j]];
+            }
+            
         }
         [_tableArray addObject:model];
     }
@@ -95,10 +125,10 @@
 
 -(void)singleTouch{
     UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"更换背景图片" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         UIAlertController* alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleDefault handler:nil];
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         UIAlertAction *photoAction = [UIAlertAction actionWithTitle:@"从相册选取" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             UIImagePickerController* imagePicker = [[UIImagePickerController alloc] init];
             imagePicker.delegate = self;
@@ -107,7 +137,15 @@
             [self presentViewController:imagePicker animated:YES completion:nil];
         }];
         UIAlertAction *camAction = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSLog(@"拍照");
+            UIImagePickerController* picker = [[UIImagePickerController alloc] init];
+            if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+                picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+                picker.delegate=self;
+                 self.modalPresentationStyle=UIModalPresentationOverCurrentContext;
+                [self presentViewController:picker animated:YES completion:nil];
+            } else {
+                NSLog(@"不支持相机");
+            }
         }];
         [alert addAction:photoAction];
         [alert addAction:camAction];
@@ -164,6 +202,7 @@
     NineImageView* imageView = [[NineImageView alloc]initWithFrame:CGRectMake(20, 100, SCREEN_SIZE.width - 40, SCREEN_SIZE.width - 40)];
 //    imageView.delegate = self;
     [self.view addSubview:imageView];
+    [photoArray addObject:@"11"];
     for (int i=0; i<9; i++) {
         if (i==8) {
             [photoArray addObject:[NSString stringWithFormat:@"q8"]];

@@ -23,8 +23,8 @@
     _headImage = [[UIImageView alloc]init];
     _headImage.frame = CGRectMake(10, 5, SCREEN_SIZE.width*0.12, SCREEN_SIZE.width*0.12);
     _headImage.backgroundColor = [UIColor redColor];
-    _headImage.layer.masksToBounds = YES;
-    _headImage.layer.cornerRadius = _headImage.frame.size.width /2;
+//    _headImage.layer.masksToBounds = YES;
+//    _headImage.layer.cornerRadius = _headImage.frame.size.width /2;
     [self.contentView addSubview:_headImage];
     
     _nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame)+5, _headImage.frame.origin.y, 0, _headImage.frame.size.height*0.5)];
@@ -39,14 +39,14 @@
     _timeLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:_timeLabel];
     
-    _textLable = [[UILabel alloc]initWithFrame:CGRectMake(10, CGRectGetMaxY(_headImage.frame), SCREEN_SIZE.width-20, 0)];
+    _textLable = [[UILabel alloc]initWithFrame:CGRectMake(CGRectGetMaxX(_headImage.frame)+5, CGRectGetMaxY(_headImage.frame), SCREEN_SIZE.width-CGRectGetMaxX(_headImage.frame)-15, 0)];
     _textLable.numberOfLines = 0;
     _textLable.textAlignment = NSTextAlignmentLeft;
     _textLable.font = [UIFont systemFontOfSize:14.0f];
     [self.contentView addSubview:_textLable];
     
     _MyView = [[NineImageView alloc]init];
-    _MyView.frame = CGRectMake(20, CGRectGetMaxY(_textLable.frame), SCREEN_SIZE.width-40, SCREEN_SIZE.width-40);
+    _MyView.frame = CGRectMake(CGRectGetMaxX(_headImage.frame)+5, CGRectGetMaxY(_textLable.frame), SCREEN_SIZE.width-CGRectGetMaxX(_headImage.frame)-15,SCREEN_SIZE.width-CGRectGetMaxX(_headImage.frame)-15);
     _MyView.delegate = self;
     [self.contentView addSubview:_MyView];
     
@@ -74,34 +74,18 @@
 +(CGFloat)cellHeight:(MyModel *)model
 {
     CGFloat height;
-    CGSize size = [UILabel sizeWithString:model.textString AndFont:14.0f WithCOntentSize:CGSizeMake(SCREEN_SIZE.width-20, CGFLOAT_MAX)];
-    
-    if (model.imageArray.count<=3) {
-        height = (SCREEN_SIZE.width-40)/3;
+    CGSize size = [UILabel sizeWithString:model.textString AndFont:14.0f WithCOntentSize:CGSizeMake(SCREEN_SIZE.width*0.88-25, CGFLOAT_MAX)];
+    if (model.imageArray.count == 0) {
+        height = 0;
+    }else if (model.imageArray.count<=3) {
+        height = (SCREEN_SIZE.width*0.85)/3;
     }else if (model.imageArray.count<=6){
-        height = (SCREEN_SIZE.width-40)/3*2;
+        height = (SCREEN_SIZE.width*0.85)/3*2;
     }else{
-        height = (SCREEN_SIZE.width-40);
+        height = (SCREEN_SIZE.width*0.85);
     }
     return height+size.height + SCREEN_SIZE.width*0.12+20;
 }
-
-////在自定义的UITableViewCell里重写drawRect：方法
-//#pragma mark - 绘制Cell分割线
-//- (void)drawRect:(CGRect)rect {
-//    CGFloat width = rect.size.width;
-//    CGFloat height = rect.size.height;
-//    NSLog(@"%f",height);
-//    //获取上下文
-//    CGContextRef ctx = UIGraphicsGetCurrentContext();
-//    //取点
-//    CGContextMoveToPoint(ctx, 0, height*0.5-40);
-//    CGContextAddLineToPoint(ctx, width, height*0.5-40);
-//    //颜色
-//    [[UIColor colorWithRed:232/255.0 green:192/255.0 blue:133/255.0 alpha:1.0] setStroke];
-//    //画线
-//    CGContextStrokePath(ctx);
-//}
 
 -(void)tapGestureTouch:(NSInteger)index andModel:(MyModel *)array{
     if ([_delegate respondsToSelector:@selector(tapGestureTouch: andModel:)]) {
